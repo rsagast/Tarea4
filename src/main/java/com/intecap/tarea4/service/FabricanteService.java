@@ -130,7 +130,7 @@ class FabricanteService implements IFabricanteService{
         try{
             Optional<FabricanteEntity> fabricanteEntityBuscado = fabricanteDAO.findById(id);
             if (fabricanteEntityBuscado.isPresent()) {
-                fabricanteDAO.deleteById(id);
+                fabricanteDAO.delete(fabricanteEntityBuscado.get());
                 response.setMetadata("eliminarFabricante()","200","Resultado exitoso");
             } else {
                 response.setMetadata("eliminarFabricante()","404","Resultado no encontrado");

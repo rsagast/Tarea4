@@ -1,11 +1,9 @@
 package com.intecap.tarea4.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity(name="articulo")
 @Data

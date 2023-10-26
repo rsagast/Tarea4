@@ -3,9 +3,7 @@ package com.intecap.tarea4.service;
 import com.intecap.tarea4.model.ArticuloEntity;
 import com.intecap.tarea4.model.FabricanteEntity;
 import com.intecap.tarea4.model.dao.IArticuloDAO;
-import com.intecap.tarea4.model.dao.IFabricanteDAO;
 import com.intecap.tarea4.response.ArticuloResponseRest;
-import com.intecap.tarea4.response.FabricanteResponseRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -102,8 +100,11 @@ public class ArticuloService implements IArticuloService{
             List<ArticuloEntity> articuloEntityList = new ArrayList<>();
             Optional<ArticuloEntity> articuloEntityBuscado = articuloDAO.findById(id);
             if (articuloEntityBuscado.isPresent()) {
+                FabricanteEntity fabricanteEntityNuevo = new FabricanteEntity();
+                fabricanteEntityNuevo.setId(articuloEntity.getFabricanteEntity().getId());
                 articuloEntityBuscado.get().setNombre(articuloEntity.getNombre());
                 articuloEntityBuscado.get().setPrecio(articuloEntity.getPrecio());
+                articuloEntityBuscado.get().setFabricanteEntity(fabricanteEntityNuevo);
                 ArticuloEntity articuloEntityNuevo = articuloDAO.save(articuloEntityBuscado.get());
                 if (articuloEntityNuevo != null) {
                     articuloEntityList.add(articuloEntityNuevo);
@@ -134,7 +135,7 @@ public class ArticuloService implements IArticuloService{
         try{
             Optional<ArticuloEntity> articuloEntityBuscado = articuloDAO.findById(id);
             if (articuloEntityBuscado.isPresent()) {
-                articuloDAO.deleteById(id);
+                articuloDAO.delete(articuloEntityBuscado.get());
                 response.setMetadata("eliminarArticulo()","200","Resultado exitoso");
             } else {
                 response.setMetadata("eliminarArticulo()","404","Resultado no encontrado");

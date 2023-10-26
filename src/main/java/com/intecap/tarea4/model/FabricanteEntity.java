@@ -24,7 +24,7 @@ public class FabricanteEntity implements Serializable {
     @JsonIgnore
     @OneToMany(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             orphanRemoval = true,
             mappedBy = "fabricanteEntity"
     )
